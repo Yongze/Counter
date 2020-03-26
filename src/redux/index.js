@@ -23,14 +23,10 @@ export const decrement = () => {
 const reducer = (count = 0, action) => {
   switch (action.type) {
     case "INCREMENT": {
-      return {
-        count: count + 1
-      };
+      return count + 1;
     }
     case "DECREMENT": {
-      return {
-        count: count - 1
-      };
+      return count - 1;
     }
     default:
       return count;
