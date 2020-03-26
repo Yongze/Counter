@@ -1,4 +1,4 @@
-import redux, { createStore } from "redux";
+import { createStore } from "redux";
 
 /**
  * Challenge: set up redux action creators, reducer, and store
@@ -38,7 +38,7 @@ const reducer = (count = 0, action) => {
 };
 
 // 3. Create a new Redux store
-const store = redux.createStore(reducer);
+const store = createStore(reducer);
 
 // 4. Set up the subscribe function so we can more easily see the changes to the Redux state as they happen
 store.subscribe(() => {
