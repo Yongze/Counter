@@ -1,16 +1,26 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
-/**
- * Challenge: set up redux action creators, reducer, and store
- * We'll be building a counter app to start out.
- * Read the comments below for the step-by-step challenges
- */
-
-// 1. Create action creators for having the count "increment" and "decrement"
-export const increment = () => {
-  return {
-    type: "INCREMENT"
-  };
+export const increment = () => (dispatch, getState) => {
+  //   const currentState = getState();
+  //   if (currentState % 2 === 0) {
+  //     dispatch({ type: "INCREMENT" });
+  //   } else {
+  //     setTimeout(() => {
+  //       dispatch({ type: "INCREMENT" });
+  //     }, 1500);
+  //   }
+  const number = getState();
+  const baseUrl = "https://swapi.co/api/people";
+  fetch(`${baseUrl}/${number}`)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      dispatch({
+        type: "INCREMENT",
+        payload: res
+      });
+    });
 };
 
 export const decrement = () => {
@@ -19,7 +29,6 @@ export const decrement = () => {
   };
 };
 
-// 2. Create a reducer to handle your increment and decrement actions
 const reducer = (count = 0, action) => {
   switch (action.type) {
     case "INCREMENT": {
@@ -33,13 +42,10 @@ const reducer = (count = 0, action) => {
   }
 };
 
-// 3. Create a new Redux store
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
-// 4. Set up the subscribe function so we can more easily see the changes to the Redux state as they happen
 store.subscribe(() => {
   console.log(store.getState());
 });
 
-// 5. Export the store as a default export
 export default store;
